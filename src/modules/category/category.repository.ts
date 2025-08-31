@@ -22,4 +22,19 @@ export const CategoryRepo = {
   getByCategoryName: async (category_name: string) => {
     return await prisma.category.findFirst({ where: { category_name } });
   },
+
+  update: async (
+    category_id: number,
+    { body }: { body: Prisma.CategoryUpdateInput }
+  ) => {
+    const { category_name, category_description, category_tags } = body;
+    return await prisma.category.update({
+      where: { category_id },
+      data: { category_name, category_description, category_tags },
+    });
+  },
+
+  destroy: async (category_id: number) => {
+    return await prisma.category.delete({ where: { category_id } });
+  },
 };
